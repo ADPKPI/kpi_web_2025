@@ -6,7 +6,6 @@
 <div class="container mt-4">
     <h1>My Tasks</h1>
 
-    <!-- Форма створення завдання -->
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">New Task</h5>
@@ -58,7 +57,6 @@
         </div>
     </div>
 
-    <!-- Список завдань -->
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Task List</h5>
@@ -138,7 +136,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Обробка зміни статусу
         document.querySelectorAll('.task-status').forEach(select => {
             select.addEventListener('change', function () {
                 const taskId = this.dataset.taskId;
@@ -162,7 +159,6 @@
             });
         });
 
-        // Обробка зміни пріоритету
         document.querySelectorAll('.task-priority').forEach(select => {
             select.addEventListener('change', function () {
                 const taskId = this.dataset.taskId;
@@ -187,7 +183,6 @@
             });
         });
 
-        // Обробка редагування завдання
         document.querySelectorAll('.edit-task').forEach(button => {
             button.addEventListener('click', function () {
                 const row = this.closest('tr');
@@ -200,10 +195,10 @@
                 this.style.display = 'none';
                 row.querySelector('.save-task').style.display = 'inline-block';
                 row.querySelector('.cancel-edit').style.display = 'inline-block';
+                row.querySelector('.delete-task').style.display = 'none';
             });
         });
 
-        // Обробка скасування редагування
         document.querySelectorAll('.cancel-edit').forEach(button => {
             button.addEventListener('click', function () {
                 const row = this.closest('tr');
@@ -216,10 +211,10 @@
                 row.querySelector('.edit-task').style.display = 'inline-block';
                 row.querySelector('.save-task').style.display = 'none';
                 this.style.display = 'none';
+                row.querySelector('.delete-task').style.display = 'inline-block';
             });
         });
 
-        // Обробка збереження змін
         document.querySelectorAll('.save-task').forEach(button => {
             button.addEventListener('click', function () {
                 const taskId = this.dataset.taskId;
@@ -231,7 +226,7 @@
                 const priority = row.querySelector('.task-priority').value;
 
                 fetch(`/tasks/${taskId}`, {
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
@@ -251,7 +246,6 @@
             });
         });
 
-        // Обробка видалення завдання
         document.querySelectorAll('.delete-task').forEach(button => {
             button.addEventListener('click', function () {
                 if (confirm('Are you sure you want to delete this task?')) {
